@@ -1,0 +1,50 @@
+[
+  {
+    "id": "AML-001",
+    "category": "transaction_limit",
+    "keywords": ["cash", "10000", "threshold", "limit", "ctr", "currency"],
+    "rule": "Cash transactions exceeding $10,000 must be reported to FinCEN via a Currency Transaction Report (CTR).",
+    "severity": "HIGH",
+    "action_required": "File CTR within 15 days."
+  },
+  {
+    "id": "AML-002",
+    "category": "kyc_requirement",
+    "keywords": ["identity", "verify", "passport", "document", "kyc", "id"],
+    "rule": "The customer's identity must be verified using a government-issued ID before any account opening or high-value transaction.",
+    "severity": "HIGH",
+    "action_required": "Deny transaction if the customer's identity cannot be verified."
+  },
+  {
+    "id": "AML-003",
+    "category": "suspicious_activity",
+    "keywords": ["pattern", "spike", "international", "wire", "jurisdiction", "suspicious"],
+    "rule": "Repeated transfers just below reporting thresholds, sudden spikes in activity inconsistent with past behavior, and frequent international wires to high-risk jurisdictions are indicators of suspicious activity.",
+    "severity": "HIGH",
+    "action_required": "File a SAR within 30 days and escalate to compliance officer."
+  },
+  {
+    "id": "AML-004",
+    "category": "transaction_limit",
+    "keywords": ["structuring", "smurfing", "avoid", "threshold", "split", "deposit"],
+    "rule": "Breaking up transactions to avoid the $10,000 reporting threshold, known as structuring or smurfing, is illegal under the Bank Secrecy Act.",
+    "severity": "HIGH",
+    "action_required": "File a SAR within 30 days."
+  },
+  {
+    "id": "AML-005",
+    "category": "kyc_requirement",
+    "keywords": ["beneficial", "ownership", "25%", "individual", "company", "business"],
+    "rule": "Before opening a business account, the bank must identify any individual owning 25% or more of the company. This is called the Beneficial Ownership Rule.",
+    "severity": "HIGH",
+    "action_required": "Collect government-issued ID for all beneficial owners before account opening."
+  },
+  {
+    "id": "AML-006",
+    "category": "suspicious_activity",
+    "keywords": ["layering", "rapid", "funds", "movement", "freeze", "spike"],
+    "rule": "A sudden spike in account activity inconsistent with customer history — such as large funds moving in and out within 48 hours — is an indicator of suspicious activity.",
+    "severity": "CRITICAL",
+    "action_required": "File a SAR within 30 days and freeze account pending review."
+  }
+]
