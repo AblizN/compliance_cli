@@ -39,6 +39,19 @@ def search_rules(query, rules_list):
     return result_list
 
 
+def check_scenario(scenario, rules_list):
+    violations = search_rules(scenario, rules_list)
+    return violations
+
+
+def display_violations(violations):
+    if not violations:
+        print("No compliance violations detected")
+        return
+    print("⚠️  VIOLATION DETECTED")
+    display_results(violations)
+
+
 def display_results(results):
     if not results:
         print("No matching rules found")
@@ -61,8 +74,20 @@ def main():
     else:
         print("Rule validation failed.")
 
-    results = search_rules("CR7", rules_list)
-    display_results(results)
+    print("ComplianceCLI — AML/KYC Assistant")
+    print("Type your question, or start with 'scenario:' to check a transaction.")
+    while True:
+        usr_input = input("You: ")
+        if usr_input.lower() in ["quit", "exit"]:
+            print("Goodbye.")
+            break
+        if "scenario" in usr_input:
+            sc = usr_input.removeprefix("scenario:")
+            result = check_scenario(sc, rules_list)
+            display_violations(result)
+        else:
+            result = search_rules(usr_input, rules_list)
+            display_results(result)
 
 
 if __name__ == "__main__":
