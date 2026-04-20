@@ -3,6 +3,7 @@ import json
 RULE_PATH = "data/rules.json"
 
 
+# Loads rules from JSON. Returns None if file is missing.
 def load_rules(file):
     try:
         with open(file, "r") as data:
@@ -12,6 +13,7 @@ def load_rules(file):
         return None
 
 
+# Checks all rules have required fields. Logs all problems at once.
 def validate_rules(rules_list):
     if not rules_list:
         return False
@@ -28,6 +30,8 @@ def validate_rules(rules_list):
     return is_valid
 
 
+# Matches rules by keywords. Lowercased for case-insensitive search.
+# Duplicate check prevents the same rule appearing twice.
 def search_rules(query, rules_list):
     result_list = []
     query_txt = query.lower()
@@ -39,11 +43,13 @@ def search_rules(query, rules_list):
     return result_list
 
 
+# Wrapper around search_rules for scenario mode.
 def check_scenario(scenario, rules_list):
     violations = search_rules(scenario, rules_list)
     return violations
 
 
+# Prints a warning header if violations found, clean message if not.
 def display_violations(violations):
     if not violations:
         print("No compliance violations detected")
@@ -52,6 +58,7 @@ def display_violations(violations):
     display_results(violations)
 
 
+# Prints matched rules in formatted blocks.
 def display_results(results):
     if not results:
         print("No matching rules found")
@@ -66,6 +73,7 @@ def display_results(results):
         print("─────────────────────────────\n")
 
 
+# Main function that keeps the chatbot running in a loop.
 def main():
     rules_list = load_rules(RULE_PATH)
 
