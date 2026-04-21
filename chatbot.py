@@ -1,6 +1,8 @@
 import json
+from datetime import datetime
 
 RULE_PATH = "data/rules.json"
+LOG_PATH = "logs/session.log"
 
 
 # Loads rules from JSON. Returns None if file is missing.
@@ -31,7 +33,6 @@ def validate_rules(rules_list):
 
 
 # Matches rules by keywords. Lowercased for case-insensitive search.
-# Duplicate check prevents the same rule appearing twice.
 def search_rules(query, rules_list):
     result_list = []
     query_txt = query.lower()
@@ -73,6 +74,15 @@ def display_results(results):
         print("─────────────────────────────\n")
 
 
+# logs records of what is asked and what is returned
+def log_session(query, results):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    matches_num = len(results)
+    log = f"[{timestamp}] QUERY: {query} | MATCHES: {matches_num}"
+    with open(LOG_PATH, "a") as log_file:
+        log_file.write(f"{log}\n")
+
+
 # Main function that keeps the chatbot running in a loop.
 def main():
     rules_list = load_rules(RULE_PATH)
@@ -93,9 +103,11 @@ def main():
             sc = usr_input.removeprefix("scenario:")
             result = check_scenario(sc, rules_list)
             display_violations(result)
+            log_session(sc, result)
         else:
             result = search_rules(usr_input, rules_list)
             display_results(result)
+            log_session(usr_input, result)
 
 
 if __name__ == "__main__":
